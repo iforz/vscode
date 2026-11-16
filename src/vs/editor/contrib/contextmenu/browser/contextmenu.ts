@@ -164,9 +164,20 @@ export class ContextMenuController implements IEditorContribution {
 
 		// translate them into other actions
 		for (const group of groups) {
-			const [, actions] = group;
+			const [groupId, actions] = group;
+			const isWritingAction = (action: IAction) => menuId === MenuId.EditorContext && groupId === 'navigation' &&
+				(action.id.startsWith('workhub.novel.') || (action instanceof SubmenuItemAction && action.item.submenu.id.startsWith('api:workhub.novel.')));
+			if (menuId === MenuId.EditorContext && groupId === 'navigation') {
+				const writingActions = actions.filter(isWritingAction);
+				if (writingActions.length) {
+					result.push(...writingActions, new Separator());
+				}
+			}
 			let addedItems = 0;
 			for (const action of actions) {
+				if (isWritingAction(action)) {
+					continue;
+				}
 				if (action instanceof SubmenuItemAction) {
 					const subActions = this._getMenuActions(model, action.item.submenu);
 					if (subActions.length > 0) {

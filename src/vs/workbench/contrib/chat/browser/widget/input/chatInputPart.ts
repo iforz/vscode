@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as dom from '../../../../../../base/browser/dom.js';
+import { ModelPickerActionItem, IModelPickerDelegate, IModelPickerPresentationOptions } from './modelPicker/modelPickerActionItem.js';
 import { addDisposableListener } from '../../../../../../base/browser/dom.js';
 import { pauseCSSAnimationsWhenHidden } from '../../../../../../base/browser/animationSync.js';
 import { DEFAULT_FONT_FAMILY } from '../../../../../../base/browser/fonts.js';
@@ -176,7 +177,6 @@ import { ChatSelectedTools } from './chatSelectedTools.js';
 import { ChatPetAchievementIds, didExplicitlySwitchChatPetModel } from '../../chatPetAchievements.js';
 import { IChatPetService } from '../../chatPetService.js';
 import { DelegationSessionPickerActionItem } from './delegationSessionPickerActionItem.js';
-import { ModelPickerActionItem, IModelPickerDelegate, IModelPickerPresentationOptions } from './modelPicker/modelPickerActionItem.js';
 import { getChatSessionTelemetryContext, getChatSessionTelemetryIds } from '../../../common/chatService/chatServiceTelemetry.js';
 import { IAgentHostConnectionsService } from '../../../../../../platform/agentHost/common/agentHostConnectionsService.js';
 import { IModePickerDelegate, ModePickerActionItem } from './modePickerActionItem.js';

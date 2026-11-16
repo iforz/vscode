@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import fs from 'fs';
+import { execFileSync } from 'child_process';
 import path from 'path';
 import { Readable } from 'stream';
 import vfs from 'vinyl-fs';
@@ -268,6 +269,11 @@ async function main(arch: string = process.arch): Promise<void> {
 	const electronPath = path.join(root, '.build', 'electron');
 	await util.rimraf(electronPath)();
 	await util.streamToPromise(getElectron(arch)());
+	// A new development runtime replaces the entire bundle, including its Finder entry.
+	const workhub = path.resolve(root, '../../CodeOSS/workbench.sh');
+	if (process.platform === 'darwin' && fs.existsSync(workhub)) {
+		execFileSync('/bin/bash', [workhub, 'install-launcher'], { stdio: 'inherit' });
+	}
 }
 
 if (import.meta.main) {

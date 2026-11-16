@@ -287,3 +287,186 @@
 	width: 100%;
 	height: 100%;
 }
+
+/* Writing prompts share the chat composer's input surface and compact toolbar. */
+.monaco-workbench .novel-writing-dialog {
+	box-sizing: border-box;
+	width: min(480px, calc(100vw - 32px));
+	max-height: 85vh;
+	margin: auto;
+	padding: 14px;
+	border: 1px solid var(--vscode-widget-border, var(--vscode-panel-border));
+	border-radius: 12px;
+	background: var(--vscode-editorWidget-background);
+	color: var(--vscode-foreground);
+	box-shadow: 0 12px 36px var(--vscode-widget-shadow);
+	font: inherit;
+}
+.novel-writing-dialog::backdrop { background: rgb(0 0 0 / 22%); }
+.novel-writing-dialog header, .novel-writing-dialog footer, .novel-writing-dialog label {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+.novel-writing-dialog header { justify-content: space-between; padding: 0 2px 10px; }
+.novel-writing-dialog header strong { font-size: 13px; font-weight: 600; }
+.novel-writing-dialog form {
+	padding: 8px;
+	border: 1px solid var(--vscode-input-border, var(--vscode-panel-border));
+	border-radius: 8px;
+	background: var(--vscode-input-background);
+	color: var(--vscode-input-foreground);
+}
+.novel-writing-dialog form:focus-within { border-color: var(--vscode-focusBorder); }
+.novel-writing-dialog textarea, .novel-writing-dialog input {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 4px 5px;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	line-height: 1.6;
+}
+.monaco-workbench .novel-writing-dialog textarea:focus { outline: none; }
+.novel-writing-dialog textarea { resize: vertical; min-height: 68px; max-height: 40vh; }
+.novel-writing-dialog footer { gap: 4px; padding-top: 6px; }
+.novel-writing-dialog label { min-width: 0; padding: 2px 4px; border-radius: 5px; color: var(--vscode-descriptionForeground); }
+.novel-writing-dialog select {
+	min-width: 0;
+	max-width: 20ch;
+	border: none;
+	color: inherit;
+	background: transparent;
+	font: inherit;
+	font-size: 12px;
+	cursor: pointer;
+}
+.novel-writing-dialog option { background: var(--vscode-dropdown-background); color: var(--vscode-dropdown-foreground); }
+.novel-writing-dialog button {
+	display: grid;
+	place-items: center;
+	width: 26px;
+	height: 26px;
+	border: 0;
+	border-radius: 6px;
+	background: transparent;
+	color: var(--vscode-descriptionForeground);
+	cursor: pointer;
+}
+.novel-writing-dialog header button:hover, .novel-writing-dialog label:hover { background: var(--vscode-toolbar-hoverBackground); }
+.novel-writing-dialog footer button[type=submit] { flex-shrink: 0; margin-left: auto; border-radius: 50%; background: var(--vscode-button-background); color: var(--vscode-button-foreground); }
+.novel-writing-dialog footer button[type=submit]:hover { background: var(--vscode-button-hoverBackground); }
+
+.monaco-workbench .novel-native-composer {
+	position: absolute;
+	z-index: 2500;
+	left: 50%;
+	top: 45%;
+	transform: translate(-50%, -50%);
+	width: min(420px, calc(100% - 24px));
+	height: auto;
+	color: var(--vscode-foreground);
+	box-shadow: 0 6px 24px var(--vscode-widget-shadow);
+}
+.novel-native-composer header, .novel-native-composer .novel-files,
+.novel-native-composer footer, .novel-native-composer .novel-files span {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+.novel-native-composer header { padding: 6px 0 0 4px; }
+.novel-native-composer .novel-files { flex-wrap: wrap; max-height: 70px; overflow: auto; min-width: 0; }
+.novel-native-composer textarea {
+	box-sizing: border-box; width: 100%; min-height: 58px; resize: none;
+	padding: 9px 4px; background: transparent; border: 0; color: var(--vscode-input-foreground); font: inherit;
+}
+.monaco-workbench .novel-native-composer textarea:focus { outline: none; }
+.novel-native-composer button {
+	height: 22px; padding: 0 4px; border: 0; border-radius: var(--vscode-cornerRadius-small);
+	background: transparent; color: inherit; font-size: 12px; cursor: pointer;
+}
+.novel-native-composer button.codicon { font-size: 16px; }
+.novel-native-composer button:hover { background: var(--vscode-toolbar-hoverBackground); }
+.novel-native-composer header > button, .novel-native-composer button[type=submit] { margin-left: auto; }
+.novel-native-composer .chat-input-toolbars { justify-content: flex-start; }
+.novel-native-composer .novel-agent-menu {
+	position: absolute; left: 0; bottom: 33px; width: min(338px, 100%); max-height: 38vh;
+	box-sizing: border-box; overflow: auto; padding: 8px;
+	background: var(--vscode-quickInput-background, var(--vscode-editorWidget-background)); color: var(--vscode-quickInput-foreground);
+	border: 1px solid var(--vscode-widget-border, var(--vscode-focusBorder)); border-radius: 8px;
+	box-shadow: 0 6px 22px var(--vscode-widget-shadow); z-index: 1;
+}
+.novel-agent-tools:not([hidden]), .novel-agent-badge { display: flex; align-items: center; gap: 6px; }
+.novel-agent-tools { padding-bottom: 8px; }
+.novel-agent-tools button:last-child { margin-left: auto; }
+.novel-agent-badge { padding: 5px 7px; border-radius: 4px; background: var(--vscode-toolbar-hoverBackground); }
+.novel-agent-menu h4 { margin: 8px 5px 3px; font-size: 11px; color: var(--vscode-descriptionForeground); }
+.novel-agent-menu button[value] { display: flex; align-items: center; gap: 5px; width: 100%; height: 25px; font: inherit; }
+.novel-agent-menu button[value]::before { content: ''; width: 13px; }
+.novel-agent-menu button[value][aria-pressed=true] { background: var(--vscode-list-inactiveSelectionBackground); }
+.novel-agent-menu button[value][aria-pressed=true]::before { content: '✓'; }
+.novel-agent-menu small { margin-left: auto; color: var(--vscode-descriptionForeground); }
+.novel-agent-menu form:not([hidden]), .novel-agent-menu label { display: grid; gap: 5px; }
+.novel-agent-menu form { padding: 4px; }
+.novel-agent-menu input, .novel-agent-menu select, .novel-agent-menu textarea { width: 100%; box-sizing: border-box; padding: 5px; border-radius: 4px; color: var(--vscode-input-foreground); background: var(--vscode-input-background); border: 1px solid var(--vscode-input-border, var(--vscode-panel-border)); }
+.novel-agent-menu textarea { resize: vertical; max-height: 30vh; }
+.novel-agent-menu textarea:focus { border-color: var(--vscode-focusBorder); }
+.novel-model-catalog { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; color: var(--vscode-descriptionForeground); font-size: 11px; }
+.novel-model-catalog button { color: var(--vscode-textLink-foreground); }
+.novel-agent-menu form button[type=submit] { margin: 4px 0 0; color: var(--vscode-button-foreground); background: var(--vscode-button-background); }
+.novel-native-composer .novel-agent-menu { width: min(650px, 85vw); max-height: 55vh; }
+.novel-agent-row { display: grid; grid-template-columns: minmax(88px, 1.35fr) minmax(62px, .85fr) minmax(84px, 1fr) 66px 66px; gap: 8px; align-items: center; padding: 4px; border-bottom: 1px solid var(--vscode-panel-border); }
+.novel-agent-columns { color: var(--vscode-descriptionForeground); font-weight: 600; }
+.novel-agent-row > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.novel-agent-row > div, .novel-skill-row { display: flex; align-items: center; gap: 4px; }
+.novel-skill-row > button:first-child { flex: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; }
+.novel-skill-picker { min-width: 0; margin: 6px 0; padding: 6px 8px; border: 1px solid var(--vscode-widget-border, var(--vscode-panel-border)); border-radius: 4px; }
+.novel-skill-toolbar { display: flex; align-items: center; gap: 6px; }
+.novel-skill-toolbar input { flex: 1; min-width: 0; }
+.novel-skill-toolbar button { white-space: nowrap; }
+.novel-skill-list { max-height: 150px; overflow-y: auto; margin-top: 4px; }
+.novel-agent-menu .novel-skill-list label { display: flex; align-items: flex-start; gap: 6px; padding: 4px 2px; cursor: pointer; }
+.novel-skill-list label:hover { background: var(--vscode-list-hoverBackground); }
+.novel-skill-list input[type=checkbox] { width: auto; flex: none; margin: 2px 0; accent-color: var(--vscode-button-background); }
+.novel-skill-list strong, .novel-skill-list small { display: block; margin: 0; overflow-wrap: anywhere; }
+.novel-skill-status { margin-top: 4px; font-size: 11px; color: var(--vscode-descriptionForeground); }
+.novel-agent-menu [role=alert] { color: var(--vscode-errorForeground); }
+
+.monaco-workbench .novel-profile-settings { top: 50%; width: min(680px, calc(100% - 24px)); background: var(--vscode-editorWidget-background); border: 1px solid var(--vscode-widget-border); border-radius: 8px; }
+.novel-profile-settings header { padding: 10px 12px; }
+.novel-profile-settings .chat-input-container { background: transparent; border: 0; }
+.novel-profile-settings .novel-files, .novel-profile-settings .chat-input-container > textarea, .novel-profile-settings footer { display: none; }
+.novel-native-composer.novel-profile-settings .novel-agent-menu { position: static; width: 100%; max-height: 68vh; box-shadow: none; border: 0; }
+.novel-role-picks { display: flex; flex-wrap: wrap; gap: 6px; }
+.novel-role-picks button { border: 1px solid var(--vscode-widget-border, var(--vscode-panel-border)); border-radius: 10px; padding: 0 8px; }
+.novel-role-picks button[aria-pressed=true] { background: var(--vscode-button-background); color: var(--vscode-button-foreground); }
+
+.monaco-workbench dialog.novel-skill-manager {
+	box-sizing: border-box; width: min(620px, 92vw); max-height: 84vh; margin: auto; padding: 16px;
+	color: var(--vscode-foreground); background: var(--vscode-editorWidget-background);
+	border: 1px solid var(--vscode-widget-border, var(--vscode-panel-border)); border-radius: 8px;
+	box-shadow: 0 8px 28px var(--vscode-widget-shadow); font: inherit;
+}
+.novel-skill-manager[open] { display: flex; flex-direction: column; gap: 10px; }
+.novel-skill-manager::backdrop { background: rgba(0, 0, 0, .35); }
+.novel-skill-manager header, .novel-skill-manager nav, .novel-skill-manager .skill-title, .novel-skill-manager details > div > div { display: flex; align-items: center; gap: 8px; }
+.novel-skill-manager h2 { margin: 0; font-size: 16px; }
+.novel-skill-manager header button, .novel-skill-manager .skill-title button { margin-left: auto; }
+.novel-skill-manager button { flex: none; padding: 4px 9px; cursor: pointer; border: 0; border-radius: 4px; color: var(--vscode-button-secondaryForeground); background: var(--vscode-button-secondaryBackground); font: inherit; }
+.novel-skill-manager button:hover { background: var(--vscode-button-secondaryHoverBackground); }
+.novel-skill-manager button.primary { color: var(--vscode-button-foreground); background: var(--vscode-button-background); }
+.novel-skill-manager button.primary:hover { background: var(--vscode-button-hoverBackground); }
+.novel-skill-manager button:disabled { opacity: .6; }
+.novel-skill-manager input { padding: 6px 8px; color: var(--vscode-input-foreground); background: var(--vscode-input-background); border: 1px solid var(--vscode-input-border, var(--vscode-panel-border)); border-radius: 4px; font: inherit; }
+.novel-skill-manager summary { cursor: pointer; }
+.novel-skill-manager details { flex: none; max-height: 15vh; overflow: auto; }
+.novel-skill-manager details > div > div { padding: 3px 0; }
+.novel-skill-manager details span { flex: 1; overflow-wrap: anywhere; }
+.novel-skill-manager .skill-cards { overflow: auto; min-height: 0; }
+.novel-skill-manager article { padding: 8px 0; border-top: 1px solid var(--vscode-panel-border); }
+.novel-skill-manager p { margin: 4px 0; }
+.novel-skill-manager small { display: block; overflow-wrap: anywhere; }
+.novel-skill-manager small, .novel-skill-manager .skill-count { color: var(--vscode-descriptionForeground); }
+.novel-skill-manager .skill-warnings { white-space: pre-line; overflow: auto; max-height: 12vh; color: var(--vscode-errorForeground); }
+.novel-skill-manager .skill-warnings:empty { display: none; }

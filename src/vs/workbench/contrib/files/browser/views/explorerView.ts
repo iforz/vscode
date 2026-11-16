@@ -596,6 +596,19 @@ export class ExplorerView extends ViewPane implements IExplorerView {
 		// Update resource context based on focused element
 		this._register(this.tree.onDidChangeFocus(e => this.onFocusChanged(e.elements)));
 		this.onFocusChanged([]);
+		const showNovelWorkflow = (item: ExplorerItem | null | undefined) => {
+			if (!item?.isDirectory || this.explorerService.isEditable(undefined)) { return; }
+			const novels = this.contextKeyService.getContextKeyValue<string[]>('workhub.novel.folders');
+			if (novels?.includes(item.resource.toString())) {
+				void this.commandService.executeCommand('workhub.novel.openWorkflow', item.resource);
+			}
+		};
+		this._register(this.tree.onMouseClick(({ element, browserEvent }) => {
+			if (browserEvent.button === 0 && !browserEvent.shiftKey && !browserEvent.metaKey && !browserEvent.ctrlKey && !browserEvent.altKey) {
+				showNovelWorkflow(element);
+			}
+		}));
+
 		// Open when selecting via keyboard
 		this._register(this.tree.onDidOpen(async e => {
 			const element = e.element;
@@ -606,6 +619,7 @@ export class ExplorerView extends ViewPane implements IExplorerView {
 			// Check if the item was previously also selected, if yes the user is simply expanding / collapsing current selection #66589.
 			const shiftDown = DOM.isKeyboardEvent(e.browserEvent) && e.browserEvent.shiftKey;
 			if (!shiftDown) {
+				if (DOM.isKeyboardEvent(e.browserEvent)) { showNovelWorkflow(element); }
 				if (element.isDirectory || this.explorerService.isEditable(undefined)) {
 					// Do not react if user is clicking on explorer items while some are being edited #70276
 					// Do not react if clicking on directories
